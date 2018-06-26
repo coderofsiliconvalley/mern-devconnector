@@ -38,10 +38,6 @@ mongoose
 //
 // ROUTES
 //
-
-app.get("/", (req, res) => res.send("hello, world."));
-
-// Use Routes
 app.use("/api/users", users);
 app.use("/api/profile", profile);
 app.use("/api/posts", posts);
