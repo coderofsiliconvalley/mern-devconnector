@@ -1,7 +1,10 @@
 const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+const secretOrKey = require("../../config/keys").secretOrKey;
 const gravatar = require("gravatar");
+const passport = require("passport");
 
 // Load user model
 const User = require("../../models/User");
@@ -64,13 +67,40 @@ router.post("/login", (req, res) => {
     // Check password
     bcrypt.compare(password, user.password).then(isMatch => {
       if (isMatch) {
-        // Return the JWT for successful auth
-        return res.json({ msg: "User successfully logged in." });
+        // User matched - Return the JWT for successful auth
+        const payload = {
+          id: user.id,
+          name: user.name,
+          avatar: user.avatar
+        };
+
+        jwt.sign(payload, secretOrKey, { expiresIn: 3600 }, (err, token) => {
+          res.json({
+            success: true,
+            token: "Bearer " + token
+          });
+        });
+        //return res.json({ msg: "User successfully logged in." });
       } else {
-        return res.status(400).json({ msg: "Invalid password" });
+        return res.status(400).json({ password: "Invalid password" });
       }
     });
   });
 });
 
+// @route   GET api/users/current
+// @desc    Return Current User
+// @access  Private
+router.get(
+  "/current",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    res.json({
+      id: req.user.id,
+      name: req.user.name,
+      email: req.user.email,
+      avatar: req.user.avatar
+    });
+  }
+);
 module.exports = router;
