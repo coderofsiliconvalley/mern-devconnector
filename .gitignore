@@ -1,4 +1,5 @@
 .DS_Store
 .notes
+config/
 node_modules/
 yarn.lock
