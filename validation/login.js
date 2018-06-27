@@ -25,11 +25,6 @@ module.exports = validateLoginInput = data => {
     errors.email = "Email is required";
   }
 
-  // Password Min and Max length
-  if (!Validator.isLength(data.password, { min: 6, max: 30 })) {
-    errors.password = "Invalid Password";
-  }
-
   // Password required
   if (Validator.isEmpty(data.password)) {
     errors.password = "Password is required";
