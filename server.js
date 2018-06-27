@@ -15,7 +15,7 @@ const app = express();
 // MIDDLEWARE
 //
 
-// Static Files
+// React App - Static Files from public directory
 app.use(express.static("public"));
 
 // Passport Middleware
