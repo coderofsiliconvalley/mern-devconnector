@@ -6,6 +6,9 @@ const secretOrKey = require("../../config/keys").secretOrKey;
 const gravatar = require("gravatar");
 const passport = require("passport");
 
+// Load input validation
+const validateRegisterInput = require("../../validation/register");
+
 // Load user model
 const User = require("../../models/User");
 
@@ -18,10 +21,18 @@ router.get("/test", (req, res) => res.json({ msg: "users works" }));
 // @desc    Register a new user
 // @access  Public
 router.post("/register", (req, res) => {
+  const { errors, isValid } = validateRegisterInput(req.body);
+
+  // Check for valid input
+  if (!isValid) {
+    return res.status(400).json(errors);
+  }
+
   // Find if the user email already exists
   User.findOne({ email: req.body.email }).then(user => {
     if (user) {
-      return res.status(400).json({ error: "Email already exists" });
+      errors.email = "Email already exists";
+      return res.status(400).json(errors);
     } else {
       const avatar = gravatar.url(req.body.email, {
         s: 200, // Avatar Size,
