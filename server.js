@@ -1,4 +1,5 @@
 const express = require("express");
+const path = require("path");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const passport = require("passport");
@@ -13,6 +14,9 @@ const app = express();
 //
 // MIDDLEWARE
 //
+
+// Static Files
+app.use(express.static("public"));
 
 // Passport Middleware
 app.use(passport.initialize());
@@ -41,6 +45,15 @@ mongoose
 app.use("/api/users", users);
 app.use("/api/profile", profile);
 app.use("/api/posts", posts);
+
+// Serve Static File for all other unknown routes
+
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname + "/public/index.html"));
+
+  // The old 404: File Not Found notice.
+  //res.status(404).json({ msg: "Page Not Found" });
+});
 
 //
 // START APP
