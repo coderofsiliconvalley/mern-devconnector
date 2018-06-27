@@ -6,10 +6,11 @@ const Validator = require("validator");
 const isEmpty = require("./is-empty");
 
 // NOTE: All validation is string-based
-module.exports = function validateRegisterInput(data) {
+module.exports = validateRegisterInput = data => {
   let errors = {};
 
-  // TODO: gracefully error out when form is not submitted as
+  // Convert empty object properties to empty string, and
+  // Gracefully error out in case form is not submitted as
   // x-www-form-urlencoded
   data.name = !isEmpty(data.name) ? data.name : "";
   data.email = !isEmpty(data.email) ? data.email : "";
