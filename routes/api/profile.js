@@ -8,6 +8,9 @@ const Profile = require("../../models/Profile");
 // Load User Model
 const User = require("../../models/User");
 
+// Load Form Validation
+const validateProfileInput = require("../../validation/profile");
+
 // @route   GET api/profile
 // @desc    Get Current user's profile
 // @access  Private
@@ -19,6 +22,7 @@ router.get(
     const userId = req.user.id;
 
     Profile.findOne({ user: userId })
+      .populate("user", ["name", "avatar"])
       .then(profile => {
         if (!profile) {
           errors.noprofile = "There is no profile for this user";
@@ -38,7 +42,13 @@ router.post(
   "/",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    // Validation
+    const { errors, isValid } = validateProfileInput(req.body);
+
+    // Check for valid input
+    if (!isValid) {
+      return res.status(400).json(errors);
+    }
+
     // Get User Profile fields
     const profileFields = {};
     profileFields.user = req.user.id; // Passed in via Passport jwt auth
@@ -61,28 +71,29 @@ router.post(
     // Handle social objects in Profile model
     profileFields.social = {};
 
-    if (req.youtube) profileFields.social.youtube = req.body.youtube;
-    if (req.twitter) profileFields.social.twitter = req.body.twitter;
-    if (req.facebook) profileFields.social.facebook = req.body.facebook;
-    if (req.linkedin) profileFields.social.linkedin = req.body.linkedin;
-    if (req.instagram) profileFields.social.instagram = req.body.instagram;
+    if (req.body.youtube) profileFields.social.youtube = req.body.youtube;
+    if (req.body.twitter) profileFields.social.twitter = req.body.twitter;
+    if (req.body.facebook) profileFields.social.facebook = req.body.facebook;
+    if (req.body.linkedin) profileFields.social.linkedin = req.body.linkedin;
+    if (req.body.instagram) profileFields.social.instagram = req.body.instagram;
 
     // Experience AND Eductation properties handled by dedicated endpoints/separate form on front-end
 
+    // See if a profile for this user already exists.
+    // EXISTS: Update the existing profile in the DB
+    // NEW: Create new profile in the DB
     Profile.findOne({ user: req.user.id })
       .then(profile => {
         if (profile) {
           // Update
-          profile
-            .findOneAndUpdate(
-              { user: req.user.id },
-              { $set: profileFields },
-              { new: true }
-            )
-            .then(profile => res.json(profile));
+          Profile.findOneAndUpdate(
+            { user: req.user.id },
+            { $set: profileFields },
+            { new: true }
+          ).then(profile => res.json(profile));
         } else {
           // Check if handle exists - gotta be unique
-          profile.findOne({ handle: profileFields.handle }).then(profile => {
+          Profile.findOne({ handle: profileFields.handle }).then(profile => {
             if (profile) {
               erros.handle = "That handle already exists";
               res.status(400).json(errors);
