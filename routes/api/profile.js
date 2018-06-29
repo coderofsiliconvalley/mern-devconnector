@@ -35,6 +35,67 @@ router.get(
   }
 );
 
+// @route   GET api/profile/all
+// @desc    Get all user profiles
+// @access  Public
+router.get("/all", (req, res) => {
+  const errors = {};
+
+  Profile.find()
+    .populate("users", ["name", "avatar"])
+    .then(profiles => {
+      if (!profiles) {
+        errors.noprofile = "There are no profiles yet.";
+        return res.status(404).json(errors);
+      }
+
+      res.json(profiles);
+    })
+    .catch(err =>
+      res.status(404).json({ noprofile: "There are no profiles yet." })
+    );
+});
+
+// @route   GET api/profile/handle/:handle
+// @desc    Get user profile by handle
+// @access  Public
+router.get("/handle/:handle", (req, res) => {
+  const errors = {};
+
+  Profile.findOne({ handle: req.params.handle })
+    .populate("user", ["name", "avatar"])
+    .then(profile => {
+      if (!profile) {
+        errors.noprofile = "No profile for this handle";
+        res.status(404).json(errors);
+      }
+
+      res.json(profile);
+    })
+    .catch(err => res.status(404).json({ err }));
+});
+
+// @route   GET api/profile/user/:user_id
+// @desc    Get user by user id
+// @access  Public
+router.get("/user/:user_id", (req, res) => {
+  const errors = {};
+
+  Profile.findOne({ user: req.params.user_id })
+    .populate("user", ["name", "avatar"])
+    .then(profile => {
+      if (!profile) {
+        errors.noprofile = "No profile for this user";
+        res.status(404).json(errors);
+      }
+
+      res.json(profile);
+    })
+    .catch(err =>
+      res.status(404).json({ noprofile: "No profile for this user" })
+    );
+});
+
 // @route   PUT api/profile
 // @desc    CREATE or EDIT user profile
 // @access  Private
@@ -63,7 +124,7 @@ router.post(
       profileFields.skills = req.body.skills.split(",");
     }
 
-    if (req.bio) profileFields.bio = req.body.bio;
+    if (req.body.bio) profileFields.bio = req.body.bio;
 
     if (req.body.githubusername)
       profileFields.githubusername = req.body.githubusername;

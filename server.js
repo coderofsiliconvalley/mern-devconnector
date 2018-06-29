@@ -45,7 +45,9 @@ mongoose
 app.use("/api/users", users);
 app.use("/api/profile", profile);
 app.use("/api/posts", posts);
-
+app.get("/api/*", (req, res) =>
+  res.status(404).json({ noapi: "Not a valid API endpoint" })
+);
 // Serve Static File for all other unknown routes
 
 app.get("*", (req, res) => {
