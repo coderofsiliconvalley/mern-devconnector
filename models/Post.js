@@ -8,7 +8,7 @@ const PostSchema = new Schema({
 	// Save user info, in case associated user account is deleted
 	name: { type: String }, //, required: true
 	avatar: { type: String }, //, required: true
-	like: [
+	likes: [
 		{
 			user: { type: Schema.Types.ObjectId, ref: "users" }
 		}
