@@ -6,8 +6,8 @@ const PostSchema = new Schema({
 	user: { type: Schema.Types.ObjectId, ref: "users" },
 	text: { type: String, required: true },
 	// Save user info, in case associated user account is deleted
-	name: { type: String, required: true },
-	avatar: { type: String, required: true },
+	name: { type: String }, //, required: true
+	avatar: { type: String }, //, required: true
 	like: [
 		{
 			user: { type: Schema.Types.ObjectId, ref: "users" }
@@ -18,8 +18,8 @@ const PostSchema = new Schema({
 			user: { type: Schema.Types.ObjectId, ref: "users" },
 			text: { type: String, require: true },
 			// Save user info, in case associated user account is deleted
-			name: { type: String, required: true },
-			avatar: { type: String, required: true },
+			name: { type: String }, //, required: true
+			avatar: { type: String }, //, required: true
 			// Date of comment
 			date: { type: Date, default: Date.now }
 		}
