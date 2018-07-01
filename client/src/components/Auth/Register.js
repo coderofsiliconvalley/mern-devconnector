@@ -1,6 +1,8 @@
 import React, { Component } from "react";
-import axios from "axios";
+import PropTypes from "prop-types";
 import classnames from "classnames";
+import { connect } from "react-redux";
+import { registerUser } from "../../store/actions/authActions";
 
 class Register extends Component {
 	state = {
@@ -26,24 +28,20 @@ class Register extends Component {
 
 		delete newUser.errors;
 
-		// NOTE: Test submit - to be moved to Redux reducer
-		// i.e. this.props.onSubmitForm
-		axios
-			.post("/api/users/register", newUser)
-			.then(result => {
-				console.log(result.data);
-				// Clear errors - all is good
-				this.setState({ errors: {} });
-			})
-			.catch(err => this.setState({ errors: err.response.data }));
+		// Save to redux store
+		this.props.registerUser(newUser);
 	};
 
 	render() {
-		// Extract errors from state
+		// Extract errors from component state - will be a separate Redux store
 		const { errors } = this.state;
+
+		// Extract user data
+		const { user } = this.props.auth;
 
 		return (
 			<div className="register">
+				{user ? user.name : null}
 				<div className="container">
 					<div className="row">
 						<div className="col-md-8 m-auto">
@@ -115,4 +113,16 @@ class Register extends Component {
 	}
 }
 
-export default Register;
+Register.propTypes = {
+	registerUser: PropTypes.func.isRequired,
+	auth: PropTypes.object.isRequired
+};
+
+const mapStateToProps = state => ({
+	auth: state.auth
+});
+
+export default connect(
+	mapStateToProps,
+	{ registerUser }
+)(Register);
