@@ -8,6 +8,7 @@ import Navbar from "./components/Layout/Navbar";
 import Footer from "./components/Layout/Footer";
 import Landing from "./components/Layout/Landing";
 import Login from "./components/Auth/Login";
+import Logout from "./components/Auth/Logout";
 import Register from "./components/Auth/Register";
 
 // Boostrap App-Wide Style sheet
@@ -28,6 +29,7 @@ class App extends Component {
 					<div className="container">
 						<Route exact path="/login" component={Login} />
 						<Route exact path="/register" component={Register} />
+						<Route exact path="/logout" component={Logout} />
 					</div>
 					<Footer />
 				</div>

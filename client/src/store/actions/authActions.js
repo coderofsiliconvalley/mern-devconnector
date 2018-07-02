@@ -36,6 +36,7 @@ export const loginUser = userData => dispatch => {
 			// Decode token and extract user data
 			const decodedToken = jwt_decode(token);
 			dispatch(setCurrentUser(decodedToken));
+			dispatch(setAuthTimeout(decodedToken));
 		})
 		.catch(err =>
 			dispatch({
@@ -45,12 +46,39 @@ export const loginUser = userData => dispatch => {
 		);
 };
 
+export const logoutUser = () => {
+	// Remove the token localStorage if it exists
+	if (localStorage.jwtToken) {
+		localStorage.removeItem("jwtToken");
+	}
+
+	return {
+		type: actions.AUTH_LOGOUT_USER
+	};
+};
+
 // Set logged in user
 export const setCurrentUser = decodedToken => {
-	console.log("set current user dispatched: ", decodedToken);
 	return {
 		type: actions.AUTH_SET_CURRENT_USER,
 		payload: decodedToken
+	};
+};
+
+// Authentication is automatically removed based on the
+// token exp and iat properties set by the server.
+export const setAuthTimeout = decodedToken => {
+	return dispatch => {
+		let expirationInMilliseconds = 3600000; // default to an hour
+
+		if (decodedToken.exp) {
+			expirationInMilliseconds = (new Date(decodedToken.exp) - new Date(decodedToken.iat)) * 1000;
+		}
+
+		//console.log("token expiration: ", expirationInMilliseconds);
+		setTimeout(() => {
+			dispatch(logoutUser());
+		}, expirationInMilliseconds);
 	};
 };
 
@@ -64,6 +92,9 @@ export const checkAuthentication = () => {
 			// Decode and set user info and expiration
 			const decodedToken = jwt_decode(localStorage.jwtToken);
 			dispatch(setCurrentUser(decodedToken));
+			dispatch(setAuthTimeout(decodedToken));
+		} else {
+			dispatch(logoutUser());
 		}
 	};
 };

@@ -12,12 +12,16 @@ const initialState = {
 const reducer = (state = initialState, action) => {
 	switch (action.type) {
 		case actionTypes.AUTH_SET_CURRENT_USER:
-			console.log("SET CURRENT USER received", action.payload);
-			console.log("Payload is Empty", { isAuthenticated: !isEmpty(action.payload) });
 			return {
 				...state,
 				isAuthenticated: !isEmpty(action.payload),
 				user: action.payload
+			};
+		case actionTypes.AUTH_LOGOUT_USER:
+			return {
+				...state,
+				isAuthenticated: false,
+				user: {}
 			};
 		default:
 			return state;
