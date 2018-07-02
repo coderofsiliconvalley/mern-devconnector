@@ -10,11 +10,8 @@ export const registerUser = (userData, history) => dispatch => {
 		.post("/api/users/register", userData)
 		.then(result => {
 			// Redirect
+			// TODO: URL Recdirect from login page
 			history.push("/login");
-
-			// Clear errors - all is good
-			// TODO: Add dispatch to clear errors
-			// this.setState({ errors: {} });
 		})
 		.catch(err =>
 			dispatch({
@@ -22,10 +19,6 @@ export const registerUser = (userData, history) => dispatch => {
 				payload: err.response.data
 			})
 		);
-	// return {
-	// 	type: actions.TEST_DISPATCH,
-	// 	payload: userData
-	// };
 };
 
 // Login and store user token
@@ -54,8 +47,23 @@ export const loginUser = userData => dispatch => {
 
 // Set logged in user
 export const setCurrentUser = decodedToken => {
+	console.log("set current user dispatched: ", decodedToken);
 	return {
-		type: actions.SET_CURRENT_USER,
+		type: actions.AUTH_SET_CURRENT_USER,
 		payload: decodedToken
+	};
+};
+
+// Check for token persistance in local Storage
+export const checkAuthentication = () => {
+	return dispatch => {
+		if (localStorage.jwtToken) {
+			// Set auth token header
+			setAuthToken(localStorage.jwtToken);
+
+			// Decode and set user info and expiration
+			const decodedToken = jwt_decode(localStorage.jwtToken);
+			dispatch(setCurrentUser(decodedToken));
+		}
 	};
 };

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { BrowserRouter, Route } from "react-router-dom";
 import { connect } from "react-redux";
+import * as actions from "./store/actions";
 
 // Layout Components
 import Navbar from "./components/Layout/Navbar";
@@ -14,7 +15,8 @@ import "./App.css";
 
 class App extends Component {
 	componentWillMount() {
-		// Check for Auth Token
+		// Maintain Login Persistence: Check for Auth Token
+		this.props.onCheckAuthentication();
 	}
 
 	render() {
@@ -34,4 +36,18 @@ class App extends Component {
 	}
 }
 
-export default connect()(App);
+const mapStateToProps = state => {
+	return {
+		auth: state.auth
+	};
+};
+
+const mapDispatchToProps = dispatch => {
+	return {
+		onCheckAuthentication: () => dispatch(actions.checkAuthentication())
+	};
+};
+export default connect(
+	mapStateToProps,
+	mapDispatchToProps
+)(App);

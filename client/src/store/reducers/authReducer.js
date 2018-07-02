@@ -4,12 +4,16 @@ import isEmpty from "../../validation/is-empty";
 const initialState = {
 	isAuthenticated: false,
 	user: {},
+	//TODO:
+	redirectURL: "/dashboard",
 	loading: false
 };
 
 const reducer = (state = initialState, action) => {
 	switch (action.type) {
-		case actionTypes.SET_CURRENT_USER:
+		case actionTypes.AUTH_SET_CURRENT_USER:
+			console.log("SET CURRENT USER received", action.payload);
+			console.log("Payload is Empty", { isAuthenticated: !isEmpty(action.payload) });
 			return {
 				...state,
 				isAuthenticated: !isEmpty(action.payload),
