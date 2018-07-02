@@ -1,4 +1,10 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
+
+import { connect } from "react-redux";
+import * as actions from "../../store/actions";
+
+import classnames from "classnames";
 
 class Login extends Component {
 	state = {
@@ -16,16 +22,28 @@ class Login extends Component {
 	onSubmitHandler = event => {
 		event.preventDefault();
 
-		const user = {
+		const userData = {
 			...this.state
 		};
 
-		delete user.errors;
+		delete userData.errors;
 
-		console.log(user);
+		//console.log(user);
+		this.props.onLoginUser(userData);
 	};
 
+	componentWillReceiveProps(nextProps) {
+		if (nextProps.auth.isAuthenticated) {
+			this.props.history.push("/dashboard");
+		}
+
+		if (nextProps.errors) {
+			this.setState({ errors: nextProps.errors });
+		}
+	}
+
 	render() {
+		const { errors } = this.state;
 		return (
 			<div className="login">
 				<div className="container">
@@ -37,22 +55,28 @@ class Login extends Component {
 								<div className="form-group">
 									<input
 										type="email"
-										className="form-control form-control-lg"
+										className={classnames("form-control form-control-lg", {
+											"is-invalid": errors.email
+										})}
 										placeholder="Email Address"
 										name="email"
 										value={this.state.email}
 										onChange={this.onChangeHandler}
 									/>
+									{errors.email && <div className="invalid-feedback">{errors.email}</div>}
 								</div>
 								<div className="form-group">
 									<input
 										type="password"
-										className="form-control form-control-lg"
+										className={classnames("form-control form-control-lg", {
+											"is-invalid": errors.password
+										})}
 										placeholder="Password"
 										name="password"
 										value={this.state.password}
 										onChange={this.onChangeHandler}
 									/>
+									{errors.password && <div className="invalid-feedback">{errors.password}</div>}
 								</div>
 								<input type="submit" className="btn btn-info btn-block mt-4" />
 							</form>
@@ -64,4 +88,26 @@ class Login extends Component {
 	}
 }
 
-export default Login;
+Login.propTypes = {
+	onLoginUser: PropTypes.func.isRequired,
+	auth: PropTypes.object.isRequired,
+	errors: PropTypes.object.isRequired
+};
+
+const mapStateToProps = state => {
+	return {
+		auth: state.auth,
+		errors: state.errors
+	};
+};
+
+const mapDispatchToProps = dispatch => {
+	return {
+		onLoginUser: userData => dispatch(actions.loginUser(userData))
+	};
+};
+
+export default connect(
+	mapStateToProps,
+	mapDispatchToProps
+)(Login);
