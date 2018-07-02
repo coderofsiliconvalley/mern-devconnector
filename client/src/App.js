@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { BrowserRouter, Route } from "react-router-dom";
+import { connect } from "react-redux";
 
 // Layout Components
 import Navbar from "./components/Layout/Navbar";
@@ -12,6 +13,10 @@ import Register from "./components/Auth/Register";
 import "./App.css";
 
 class App extends Component {
+	componentWillMount() {
+		// Check for Auth Token
+	}
+
 	render() {
 		return (
 			<BrowserRouter>
@@ -29,4 +34,4 @@ class App extends Component {
 	}
 }
 
-export default App;
+export default connect()(App);
