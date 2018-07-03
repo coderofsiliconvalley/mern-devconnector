@@ -46,15 +46,15 @@ export const loginUser = userData => dispatch => {
 		);
 };
 
-export const logoutUser = history => {
+export const logoutUser = history => dispatch => {
 	// Remove the token localStorage if it exists
-	if (localStorage.jwtToken) {
-		localStorage.removeItem("jwtToken");
-	}
+	localStorage.removeItem("jwtToken");
 
-	return {
-		type: actions.AUTH_LOGOUT_USER
-	};
+	// Remove token from auth header
+	setAuthTokenRequestHeader(false);
+
+	// Clear authenticated state and user info from auth store
+	dispatch(setCurrentUser({}));
 };
 
 // Set logged in user
@@ -77,7 +77,9 @@ export const setAuthTimeout = decodedToken => {
 		// If token has not expired, then start countdown
 		if (expirationTimestamp >= currentTimestamp) {
 			const expirationInMilliseconds = expirationTimestamp - currentTimestamp; // * 1000;
+
 			console.log("token has not expired. starting count down...", expirationInMilliseconds);
+
 			setTimeout(() => {
 				dispatch(logoutUser());
 			}, expirationInMilliseconds);

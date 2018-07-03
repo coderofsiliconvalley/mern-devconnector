@@ -16,7 +16,7 @@ import "./App.css";
 
 class App extends Component {
 	componentWillMount() {
-		// Maintain Login Persistence: Check for Auth Token
+		// To Maintain Login Persistence: Check for Auth Token
 		this.props.onCheckAuthentication();
 	}
 

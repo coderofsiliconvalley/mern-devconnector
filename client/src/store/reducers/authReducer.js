@@ -17,12 +17,6 @@ const reducer = (state = initialState, action) => {
 				isAuthenticated: !isEmpty(action.payload),
 				user: action.payload
 			};
-		case actionTypes.AUTH_LOGOUT_USER:
-			return {
-				...state,
-				isAuthenticated: false,
-				user: {}
-			};
 		default:
 			return state;
 	}

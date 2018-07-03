@@ -33,17 +33,27 @@ class Login extends Component {
 	};
 
 	componentWillReceiveProps(nextProps) {
+		// If auth state changed to true...forward to the dashboard
 		if (nextProps.auth.isAuthenticated) {
 			this.props.history.push("/dashboard");
 		}
 
+		// Pass in any errors from last form submit
 		if (nextProps.errors) {
 			this.setState({ errors: nextProps.errors });
 		}
 	}
 
+	componentDidMount() {
+		// If the user is already authenticated...forward to the dashboard
+		if (this.props.auth.isAuthenticated) {
+			this.props.history.push(this.props.auth.redirectURL);
+		}
+	}
+
 	render() {
 		const { errors } = this.state;
+
 		return (
 			<div className="login">
 				<div className="container">
