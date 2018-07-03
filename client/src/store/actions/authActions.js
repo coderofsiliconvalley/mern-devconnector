@@ -1,6 +1,6 @@
 import axios from "axios";
 import jwt_decode from "jwt-decode";
-import setAuthToken from "../../utils/setAuthToken";
+import setAuthTokenRequestHeader from "../../utils/setAuthToken";
 
 import * as actions from "./actionTypes";
 
@@ -31,12 +31,12 @@ export const loginUser = userData => dispatch => {
 			localStorage.setItem("jwtToken", token);
 
 			// Set Auth header to new token
-			setAuthToken(token);
+			setAuthTokenRequestHeader(token);
 
 			// Decode token and extract user data
 			const decodedToken = jwt_decode(token);
-			dispatch(setCurrentUser(decodedToken));
-			dispatch(setAuthTimeout(decodedToken));
+			dispatch(setCurrentUser(decodedToken)); // User info in auth redux state
+			dispatch(setAuthTimeout(decodedToken)); // Begin countdown to expired token
 		})
 		.catch(err =>
 			dispatch({
@@ -46,7 +46,7 @@ export const loginUser = userData => dispatch => {
 		);
 };
 
-export const logoutUser = () => {
+export const logoutUser = history => {
 	// Remove the token localStorage if it exists
 	if (localStorage.jwtToken) {
 		localStorage.removeItem("jwtToken");
@@ -66,19 +66,25 @@ export const setCurrentUser = decodedToken => {
 };
 
 // Authentication is automatically removed based on the
-// token exp and iat properties set by the server.
+// jwt token exp property set by the server.
 export const setAuthTimeout = decodedToken => {
 	return dispatch => {
-		let expirationInMilliseconds = 3600000; // default to an hour
+		//let expirationInMilliseconds = 3600000; // default to an hour is no exp property is found in token
 
-		if (decodedToken.exp) {
-			expirationInMilliseconds = (new Date(decodedToken.exp) - new Date(decodedToken.iat)) * 1000;
-		}
+		const currentTimestamp = new Date().getTime();
+		const expirationTimestamp = new Date(decodedToken.exp) * 1000;
 
-		//console.log("token expiration: ", expirationInMilliseconds);
-		setTimeout(() => {
+		// If token has not expired, then start countdown
+		if (expirationTimestamp >= currentTimestamp) {
+			const expirationInMilliseconds = expirationTimestamp - currentTimestamp; // * 1000;
+			console.log("token has not expired. starting count down...", expirationInMilliseconds);
+			setTimeout(() => {
+				dispatch(logoutUser());
+			}, expirationInMilliseconds);
+		} else {
+			// Otherwise, token has expired Logout right away
 			dispatch(logoutUser());
-		}, expirationInMilliseconds);
+		}
 	};
 };
 
@@ -86,10 +92,10 @@ export const setAuthTimeout = decodedToken => {
 export const checkAuthentication = () => {
 	return dispatch => {
 		if (localStorage.jwtToken) {
-			// Set auth token header
-			setAuthToken(localStorage.jwtToken);
+			// Set auth token to request headers
+			setAuthTokenRequestHeader(localStorage.jwtToken);
 
-			// Decode and set user info and expiration
+			// Decode token and set auth.user state and start token expiration countdown
 			const decodedToken = jwt_decode(localStorage.jwtToken);
 			dispatch(setCurrentUser(decodedToken));
 			dispatch(setAuthTimeout(decodedToken));
