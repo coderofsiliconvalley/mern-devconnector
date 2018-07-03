@@ -78,7 +78,7 @@ export const setAuthTimeout = decodedToken => {
 		if (expirationTimestamp >= currentTimestamp) {
 			const expirationInMilliseconds = expirationTimestamp - currentTimestamp; // * 1000;
 
-			console.log("token has not expired. starting count down...", expirationInMilliseconds);
+			//console.log("token has not expired. starting count down...", expirationInMilliseconds);
 
 			setTimeout(() => {
 				dispatch(logoutUser());
