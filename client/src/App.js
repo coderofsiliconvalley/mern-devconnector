@@ -7,6 +7,7 @@ import * as actions from "./store/actions";
 import Navbar from "./components/Layout/Navbar";
 import Footer from "./components/Layout/Footer";
 import Landing from "./components/Layout/Landing";
+import Dashboard from "./components/Dashboard/Dashboard";
 import Login from "./components/Auth/Login";
 import Logout from "./components/Auth/Logout";
 import Register from "./components/Auth/Register";
@@ -30,6 +31,7 @@ class App extends Component {
 						<Route exact path="/login" component={Login} />
 						<Route exact path="/register" component={Register} />
 						<Route exact path="/logout" component={Logout} />
+						<Route exact path="/dashboard" component={Dashboard} />
 					</div>
 					<Footer />
 				</div>

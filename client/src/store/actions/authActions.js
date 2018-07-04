@@ -3,6 +3,7 @@ import jwt_decode from "jwt-decode";
 import setAuthTokenRequestHeader from "../../utils/setAuthToken";
 
 import * as actions from "./actionTypes";
+import { clearCurrentProfile } from "./profileActions";
 
 // Register user
 export const registerUser = (userData, history) => dispatch => {
@@ -55,6 +56,9 @@ export const logoutUser = history => dispatch => {
 
 	// Clear authenticated state and user info from auth store
 	dispatch(setCurrentUser({}));
+
+	// Clear the current user's profile
+	dispatch(clearCurrentProfile());
 };
 
 // Set logged in user
