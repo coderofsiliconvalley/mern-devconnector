@@ -18,6 +18,7 @@ export const clearCurrentProfile = () => {
 
 // Get current user profile
 export const getCurrentProfile = () => dispatch => {
+	// Begin the profile retrieval process - get that spinner rolling
 	dispatch(setProfileLoading());
 
 	// Retrieving profile from server
