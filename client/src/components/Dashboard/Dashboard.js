@@ -3,21 +3,35 @@ import { connect } from "react-redux";
 import * as actions from "../../store/actions";
 import PropTypes from "prop-types";
 
+import Spinner from "../Common/Spinner";
+
 class Dashboard extends Component {
 	componentDidMount() {
 		this.props.onGetUserProfile();
 	}
 
 	render() {
-		let userInfo = "";
-		if (this.props.profile.profile) {
-			userInfo = this.props.profile.profile.handle;
+		// Extract user and profile info from our segmented Redux states
+		const { user } = this.props.auth;
+		const { profile, loading } = this.props.profile;
+
+		let dashboardContent;
+		if (profile === null || loading) {
+			dashboardContent = <Spinner />;
+		} else {
+			dashboardContent = <h4>Hello, {profile.user.name}</h4>;
 		}
 
 		return (
-			<div>
-				{userInfo && <h1>Dashboard loaded for:</h1>}
-				{userInfo}
+			<div className="dashboard">
+				<div className="container">
+					<div className="row">
+						<div className="col-md-12">
+							<h1 className="display-4">Dashboard</h1>
+							{dashboardContent}
+						</div>
+					</div>
+				</div>
 			</div>
 		);
 	}

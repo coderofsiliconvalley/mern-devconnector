@@ -2,5 +2,6 @@
 .notes
 config/
 node_modules/
+build/
 yarn.lock
 package-lock.json
