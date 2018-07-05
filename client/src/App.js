@@ -1,16 +1,21 @@
 import React, { Component } from "react";
-import { BrowserRouter, Route } from "react-router-dom";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { connect } from "react-redux";
 import * as actions from "./store/actions";
+
+// Common Components
+import PrivateRoute from "./components/Common/PrivateRoute";
 
 // Layout Components
 import Navbar from "./components/Layout/Navbar";
 import Footer from "./components/Layout/Footer";
 import Landing from "./components/Layout/Landing";
-import Dashboard from "./components/Dashboard/Dashboard";
+
 import Login from "./components/Auth/Login";
 import Logout from "./components/Auth/Logout";
 import Register from "./components/Auth/Register";
+import Dashboard from "./components/Dashboard/Dashboard";
+import CreateProfile from "./components/Profile/CreateProfile";
 
 // Boostrap App-Wide Style sheet
 import "./App.css";
@@ -31,7 +36,12 @@ class App extends Component {
 						<Route exact path="/login" component={Login} />
 						<Route exact path="/register" component={Register} />
 						<Route exact path="/logout" component={Logout} />
-						<Route exact path="/dashboard" component={Dashboard} />
+						<Switch>
+							<PrivateRoute exact path="/dashboard" component={Dashboard} />
+						</Switch>
+						<Switch>
+							<PrivateRoute exact path="/create-profile" component={CreateProfile} />
+						</Switch>
 					</div>
 					<Footer />
 				</div>
