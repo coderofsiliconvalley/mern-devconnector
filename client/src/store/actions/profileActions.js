@@ -37,3 +37,16 @@ export const getCurrentProfile = () => dispatch => {
 			})
 		);
 };
+
+// Create a new profile
+export const createProfile = (profileData, history) => dispatch => {
+	axios
+		.post("/api/profile", profileData)
+		.then(result => history.push("/dashboard"))
+		.catch(err => {
+			dispatch({
+				type: actionTypes.GET_ERRORS,
+				payload: err.response.data
+			});
+		});
+};
