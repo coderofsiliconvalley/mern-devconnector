@@ -73,7 +73,7 @@ class CreateProfile extends Component {
 		// Set the profile store
 		if (nextProps.profile.profile) {
 			const profileData = nextProps.profile.profile;
-			console.log("PROFILE DATA: ", profileData);
+
 			// Convert skills array into comma delimited text string
 			const skillsCSV = profileData.skills.join(",");
 
