@@ -71,11 +71,29 @@ export const deleteAccount = () => dispatch => {
 	}
 };
 
-// Add and Experience entry to the user's stored profile
+// Add Experience entry to the user's stored profile
 export const addExperience = (expData, history) => dispatch => {
 	axios
 		.post("/api/profile/experience", expData)
 		.then(res => history.push("/dashboard"))
+		.catch(err =>
+			dispatch({
+				type: actionTypes.GET_ERRORS,
+				payload: err.response.data
+			})
+		);
+};
+
+// Delete Experience entry from the user's stored profile
+export const deleteExperience = expId => dispatch => {
+	axios
+		.delete(`/api/profile/experience/${expId}`)
+		.then(res =>
+			dispatch({
+				type: actionTypes.PROFILE_GET,
+				payload: res.data
+			})
+		)
 		.catch(err =>
 			dispatch({
 				type: actionTypes.GET_ERRORS,
