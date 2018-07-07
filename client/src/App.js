@@ -11,11 +11,15 @@ import Navbar from "./components/Layout/Navbar";
 import Footer from "./components/Layout/Footer";
 import Landing from "./components/Layout/Landing";
 
+// Authentication Components
 import Login from "./components/Auth/Login";
 import Logout from "./components/Auth/Logout";
 import Register from "./components/Auth/Register";
+
+// Dashboard Components
 import Dashboard from "./components/Dashboard/Dashboard";
 import CreateProfile from "./components/Profile/CreateProfile";
+import EditProfile from "./components/Profile/EditProfile";
 
 // Boostrap App-Wide Style sheet
 import "./App.css";
@@ -41,6 +45,9 @@ class App extends Component {
 						</Switch>
 						<Switch>
 							<PrivateRoute exact path="/create-profile" component={CreateProfile} />
+						</Switch>
+						<Switch>
+							<PrivateRoute exact path="/edit-profile" component={EditProfile} />
 						</Switch>
 					</div>
 					<Footer />
