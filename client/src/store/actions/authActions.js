@@ -59,6 +59,8 @@ export const logoutUser = history => dispatch => {
 
 	// Clear the current user's profile
 	dispatch(clearCurrentProfile());
+
+	// TODO: Clear any errors
 };
 
 // Set logged in user

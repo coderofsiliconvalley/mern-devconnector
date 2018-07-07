@@ -1,5 +1,7 @@
 import axios from "axios";
 
+import { logoutUser } from "./authActions";
+
 import * as actionTypes from "../actions/actionTypes";
 
 // Profile loading status
@@ -49,4 +51,22 @@ export const createProfile = (profileData, history) => dispatch => {
 				payload: err.response.data
 			});
 		});
+};
+
+export const deleteAccount = () => dispatch => {
+	if (window.confirm("Are you sure? This can NOT be undone!")) {
+		axios
+			.delete("/api/profile")
+			.then(res => {
+				// Profile and User collections we're succesfully removed
+				// Now logout to clear all the user and profile store properties
+				dispatch(logoutUser());
+			})
+			.catch(err =>
+				dispatch({
+					type: actionTypes.GET_ERRORS,
+					payload: err.response.data
+				})
+			);
+	}
 };

@@ -5,12 +5,21 @@ import PropTypes from "prop-types";
 
 import { Link } from "react-router-dom";
 
+// UI Components
 import Spinner from "../Common/Spinner";
+
+// Dashboard Components
+import ProfileActions from "./ProfileActions";
 
 class Dashboard extends Component {
 	componentDidMount() {
 		this.props.onGetUserProfile();
 	}
+
+	deleteAccountHandler = () => {
+		// Dispatch an account delete
+		this.props.onDeleteAccount();
+	};
 
 	render() {
 		// Extract user and profile info from our segmented Redux states
@@ -25,6 +34,20 @@ class Dashboard extends Component {
 			if (Object.keys(profile).length > 0) {
 				// This user has a profile!
 				dashboardContent = <h4>Hello, {profile.user.name}</h4>;
+				dashboardContent = (
+					<div>
+						<p className="lead text-muted">
+							Welcome <Link to={`/profile/${profile.handle}`}>{user.name}</Link>
+						</p>
+						<ProfileActions />
+						{/* TODO: Experience and education tables */}
+						<div style={{ marginBottom: "60px" }}>
+							<button className="btn btn-danger" onClick={this.deleteAccountHandler}>
+								Delete My Account
+							</button>
+						</div>
+					</div>
+				);
 			} else {
 				// Authenticated user hasn't created a profile yet.
 				dashboardContent = (
@@ -70,7 +93,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
 	return {
-		onGetUserProfile: () => dispatch(actions.getCurrentProfile())
+		onGetUserProfile: () => dispatch(actions.getCurrentProfile()),
+		onDeleteAccount: () => dispatch(actions.deleteAccount())
 	};
 };
 
