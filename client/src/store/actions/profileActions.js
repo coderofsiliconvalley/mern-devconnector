@@ -89,12 +89,14 @@ export const deleteExperience = expId => dispatch => {
 	axios
 		.delete(`/api/profile/experience/${expId}`)
 		.then(res =>
+			// Get the new user profile from the server
 			dispatch({
 				type: actionTypes.PROFILE_GET,
 				payload: res.data
 			})
 		)
 		.catch(err =>
+			// Errors? Pass them on
 			dispatch({
 				type: actionTypes.GET_ERRORS,
 				payload: err.response.data
