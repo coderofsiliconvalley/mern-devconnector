@@ -35,9 +35,9 @@ const db = require("./config/keys").mongoURI;
 
 // Connect to MongoDB
 mongoose
-  .connect(db)
-  .then(() => console.log("MongoDB connected."))
-  .catch(err => console.log(err));
+	.connect(db)
+	.then(() => console.log("MongoDB connected."))
+	.catch(err => console.log("MongoDB CONNECTION ERROR: \n --------- \n %s \n ---------", err));
 
 //
 // ROUTES
@@ -45,16 +45,14 @@ mongoose
 app.use("/api/users", users);
 app.use("/api/profile", profile);
 app.use("/api/posts", posts);
-app.get("/api/*", (req, res) =>
-  res.status(404).json({ noapi: "Not a valid API endpoint" })
-);
+app.get("/api/*", (req, res) => res.status(404).json({ noapi: "Not a valid API endpoint" }));
 // Serve Static File for all other unknown routes
 
 app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname + "/public/index.html"));
+	res.sendFile(path.join(__dirname + "/public/index.html"));
 
-  // The old 404: File Not Found notice.
-  //res.status(404).json({ msg: "Page Not Found" });
+	// The old 404: File Not Found notice.
+	//res.status(404).json({ msg: "Page Not Found" });
 });
 
 //
