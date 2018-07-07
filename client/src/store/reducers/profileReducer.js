@@ -25,6 +25,14 @@ const reducer = (state = initialState, action) => {
 				...state,
 				profile: null
 			};
+		case actionTypes.PROFILE_ADD_EXPERIENCE:
+			return {
+				...state
+			};
+		case actionTypes.PROFILE_ADD_EXPERIENCE:
+			return {
+				...state
+			};
 		default:
 			return state;
 	}
