@@ -71,9 +71,23 @@ export const deleteAccount = () => dispatch => {
 	}
 };
 
+// Add and Experience entry to the user's stored profile
 export const addExperience = (expData, history) => dispatch => {
 	axios
 		.post("/api/profile/experience", expData)
+		.then(res => history.push("/dashboard"))
+		.catch(err =>
+			dispatch({
+				type: actionTypes.GET_ERRORS,
+				payload: err.response.data
+			})
+		);
+};
+
+// Add and Education entry to the user's stored profile
+export const addEducation = (eduData, history) => dispatch => {
+	axios
+		.post("/api/profile/education", eduData)
 		.then(res => history.push("/dashboard"))
 		.catch(err =>
 			dispatch({
