@@ -3,6 +3,8 @@ import { Link, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 
+import * as actions from "../../store/actions";
+
 // Form Components
 import TextInputGroup from "../Common/TextInputGroup";
 import TextAreaGroup from "../Common/TextAreaGroup";
@@ -24,11 +26,26 @@ class AddExperience extends Component {
 		description: ""
 	};
 
+	componentWillReceiveProps(nextProps) {
+		if (nextProps.errors) {
+			this.setState({ errors: nextProps.errors });
+		}
+	}
 	onSubmitHandler = event => {
 		// Stop the form submission...we control verticle
 		event.preventDefault();
 
-		console.log(this.state);
+		const expData = {
+			company: this.state.company,
+			title: this.state.title,
+			location: this.state.location,
+			from: this.state.from,
+			to: this.state.to,
+			current: this.state.current,
+			description: this.state.description
+		};
+
+		this.props.onAddExperience(expData, this.props.history);
 	};
 
 	onChangeHandler = event => {
@@ -137,6 +154,7 @@ class AddExperience extends Component {
 }
 
 AddExperience.propTypes = {
+	onAddExperience: PropTypes.func.isRequired,
 	profile: PropTypes.object.isRequired,
 	errors: PropTypes.object.isRequired
 };
@@ -148,4 +166,12 @@ const mapStateToProps = state => {
 	};
 };
 
-export default connect(mapStateToProps)(withRouter(AddExperience));
+const mapDispatchToProps = dispatch => {
+	return {
+		onAddExperience: (expData, history) => dispatch(actions.addExperience(expData, history))
+	};
+};
+export default connect(
+	mapStateToProps,
+	mapDispatchToProps
+)(withRouter(AddExperience));
