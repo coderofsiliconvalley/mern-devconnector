@@ -20,6 +20,7 @@ import Register from "./components/Auth/Register";
 import Dashboard from "./components/Dashboard/Dashboard";
 import CreateProfile from "./components/Profile/CreateProfile";
 import EditProfile from "./components/Profile/EditProfile";
+import AddExperience from "./components/Profile/AddExperience";
 
 // Boostrap App-Wide Style sheet
 import "./App.css";
@@ -40,6 +41,7 @@ class App extends Component {
 						<Route exact path="/login" component={Login} />
 						<Route exact path="/register" component={Register} />
 						<Route exact path="/logout" component={Logout} />
+						{/* Protected Routes */}
 						<Switch>
 							<PrivateRoute exact path="/dashboard" component={Dashboard} />
 						</Switch>
@@ -48,6 +50,9 @@ class App extends Component {
 						</Switch>
 						<Switch>
 							<PrivateRoute exact path="/edit-profile" component={EditProfile} />
+						</Switch>
+						<Switch>
+							<PrivateRoute exact path="/add-experience" component={AddExperience} />
 						</Switch>
 					</div>
 					<Footer />
