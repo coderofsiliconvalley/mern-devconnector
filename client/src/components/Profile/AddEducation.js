@@ -3,6 +3,7 @@ import { Link, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 
+// Redux actions
 import * as actions from "../../store/actions";
 
 // Form Components
@@ -65,7 +66,7 @@ class AddEducation extends Component {
 		const { errors } = this.state;
 
 		return (
-			<div className="add-experience">
+			<div className="add-education">
 				<div className="container">
 					<div className="row">
 						<div className="col-md-8 m-auto">
@@ -74,7 +75,7 @@ class AddEducation extends Component {
 							</Link>
 							<h1 className="display-4 text-center">Add Education</h1>
 							<p className="lead text-center">
-								Add any education that you have had in the past or currently engaged in.
+								Add any school, bootcamp, or certification program that you have attended or currently engaged in.
 							</p>
 							<small className="d-block pb-3">* = required fields</small>
 							<form onSubmit={this.onSubmitHandler} noValidate>
@@ -89,7 +90,7 @@ class AddEducation extends Component {
 								<TextInputGroup
 									name="degree"
 									type="text"
-									placeholder="* Degree"
+									placeholder="* Degree or Certification"
 									value={this.state.degree}
 									onChange={this.onChangeHandler}
 									error={errors.degree}
@@ -140,7 +141,7 @@ class AddEducation extends Component {
 									value={this.state.description}
 									onChange={this.onChangeHandler}
 									error={errors.description}
-									info="Tell us about this position"
+									info="Tell us about the program you were in"
 								/>
 								<input type="submit" value="Submit" className="btn btn-info btn-block mt-4" />
 							</form>
