@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { withRouter } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import isEmpty from "../../validation/is-empty";
@@ -181,6 +181,9 @@ class CreateProfile extends Component {
 				<div className="container">
 					<div className="row">
 						<div className="col-md-8 m-auto">
+							<Link className="btn btn-light" to="/dashboard">
+								Go Back
+							</Link>
 							<h4 className="display-4 text-center">Edit Profile</h4>
 							<small className="d-block pb-3">* = required fields</small>
 							<form onSubmit={this.onSubmitHandler} noValidate>
