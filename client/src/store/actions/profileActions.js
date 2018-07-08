@@ -116,3 +116,23 @@ export const addEducation = (eduData, history) => dispatch => {
 			})
 		);
 };
+
+// Delete Education entry from the user's stored profile
+export const deleteEducation = eduId => dispatch => {
+	axios
+		.delete(`/api/profile/education/${eduId}`)
+		.then(res =>
+			// Get the new user profile from the server
+			dispatch({
+				type: actionTypes.PROFILE_GET,
+				payload: res.data
+			})
+		)
+		.catch(err =>
+			// Errors? Pass them on
+			dispatch({
+				type: actionTypes.GET_ERRORS,
+				payload: err.response.data
+			})
+		);
+};

@@ -11,6 +11,7 @@ import Spinner from "../Common/Spinner";
 // Dashboard Components
 import ProfileActions from "./ProfileActions";
 import Experience from "./Experience";
+import Education from "./Education";
 
 class Dashboard extends Component {
 	componentDidMount() {
@@ -41,7 +42,8 @@ class Dashboard extends Component {
 							Welcome <Link to={`/profile/${profile.handle}`}>{user.name}</Link>
 						</p>
 						<ProfileActions />
-						<Experience experience={profile.experience} />
+						<Experience className="mb-4" experience={profile.experience} />
+						<Education education={profile.education} />
 						{/* TODO: Experience and education tables */}
 						<div style={{ marginBottom: "60px" }}>
 							<button className="btn btn-danger" onClick={this.deleteAccountHandler}>
