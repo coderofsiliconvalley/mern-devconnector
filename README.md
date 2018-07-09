@@ -10,3 +10,7 @@ Using concurrently npm package to run both the server and React front end for de
 
 ### Font-End
 React JS front-end of this app is under the /client folder with it's own package.json/webpack configuration. These will eventually be separated.
+
+### Running Entire Stack on Heroku
+
+TODO:
