@@ -1,6 +1,6 @@
 .DS_Store
 .notes
-config/
+config/keys.dev.js
 node_modules/
 build/
 yarn.lock
