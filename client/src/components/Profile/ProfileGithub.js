@@ -26,7 +26,7 @@ class ProfileGithub extends Component {
 
 	render() {
 		const { repos } = this.state;
-		const { username } = this.props;
+		//const { username } = this.props;
 
 		const repoItems = repos.map(repo => (
 			<div key={repo.id} className="card card-body mb-2">

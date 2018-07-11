@@ -53,17 +53,17 @@ const profileCredentials = props => {
 					</Moment>
 				)}
 			</p>
-			{edu.degree === "" ? null : (
+			{isEmpty(edu.degree) ? null : (
 				<p>
 					<strong>Degree:</strong> {edu.degree}
 				</p>
 			)}
-			{edu.fieldofstudy === "" ? null : (
+			{isEmpty(edu.fieldofstudy) ? null : (
 				<p>
 					<strong>Field of Study:</strong> {edu.fieldofstudy}
 				</p>
 			)}
-			{edu.description === "" ? null : (
+			{isEmpty(edu.description) ? null : (
 				<p>
 					<strong>Description:</strong> {edu.description}
 				</p>
