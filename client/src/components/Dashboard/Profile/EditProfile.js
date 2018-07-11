@@ -2,14 +2,14 @@ import React, { Component } from "react";
 import { Link, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import isEmpty from "../../validation/is-empty";
+import isEmpty from "../../../validation/is-empty";
 
-import * as actions from "../../store/actions/index";
+import * as actions from "../../../store/actions/index";
 
-import TextInputGroup from "../Common/TextInputGroup";
-import TextAreaGroup from "../Common/TextAreaGroup";
-import SelectListGroup from "../Common/SelectListGroup";
-import InputGroup from "../Common/InputGroup";
+import TextInputGroup from "../../Common/TextInputGroup";
+import TextAreaGroup from "../../Common/TextAreaGroup";
+import SelectListGroup from "../../Common/SelectListGroup";
+import InputGroup from "../../Common/InputGroup";
 
 class CreateProfile extends Component {
 	// Local UI State - Profile form and errors

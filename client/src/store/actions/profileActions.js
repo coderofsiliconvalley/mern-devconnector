@@ -136,3 +136,23 @@ export const deleteEducation = eduId => dispatch => {
 			})
 		);
 };
+
+// Get all social profiles
+// TODO: Infinite scrolling
+export const getProfiles = () => dispatch => {
+	dispatch(setProfileLoading());
+	axios
+		.get("api/profile/all")
+		.then(res =>
+			dispatch({
+				type: actionTypes.PROFILE_GET_ALL,
+				payload: res.data
+			})
+		)
+		.catch(err =>
+			dispatch({
+				type: actionTypes.GET_ERRORS,
+				payload: err.response.data
+			})
+		);
+};

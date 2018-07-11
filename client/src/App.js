@@ -18,10 +18,13 @@ import Register from "./components/Auth/Register";
 
 // Dashboard Components
 import Dashboard from "./components/Dashboard/Dashboard";
-import CreateProfile from "./components/Profile/CreateProfile";
-import EditProfile from "./components/Profile/EditProfile";
-import AddExperience from "./components/Profile/AddExperience";
-import AddEducation from "./components/Profile/AddEducation";
+import CreateProfile from "./components/Dashboard/Profile/CreateProfile";
+import EditProfile from "./components/Dashboard/Profile/EditProfile";
+import AddExperience from "./components/Dashboard/Profile/AddExperience";
+import AddEducation from "./components/Dashboard/Profile/AddEducation";
+
+// Public Profile Components
+import Profiles from "./components/Profiles/Profiles";
 
 // Boostrap App-Wide Style sheet
 import "./App.css";
@@ -42,6 +45,9 @@ class App extends Component {
 						<Route exact path="/login" component={Login} />
 						<Route exact path="/register" component={Register} />
 						<Route exact path="/logout" component={Logout} />
+
+						<Route exact path="/profiles" component={Profiles} />
+
 						{/* Protected Routes */}
 						<Switch>
 							<PrivateRoute exact path="/dashboard" component={Dashboard} />

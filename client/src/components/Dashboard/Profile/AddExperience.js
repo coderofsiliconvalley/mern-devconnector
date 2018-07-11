@@ -3,23 +3,22 @@ import { Link, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 
-// Redux actions
-import * as actions from "../../store/actions";
+import * as actions from "../../../store/actions";
 
 // Form Components
-import TextInputGroup from "../Common/TextInputGroup";
-import TextAreaGroup from "../Common/TextAreaGroup";
+import TextInputGroup from "../../Common/TextInputGroup";
+import TextAreaGroup from "../../Common/TextAreaGroup";
 
-class AddEducation extends Component {
+class AddExperience extends Component {
 	// Local UI State - Profile form and errors
 	state = {
 		// Form errros
 		errors: {},
 
 		// Form fields
-		school: "",
-		degree: "",
-		fieldofstudy: "",
+		company: "",
+		title: "",
+		location: "",
 		from: "",
 		to: "",
 		current: false,
@@ -36,17 +35,17 @@ class AddEducation extends Component {
 		// Stop the form submission...we control verticle
 		event.preventDefault();
 
-		const eduData = {
-			school: this.state.school,
-			degree: this.state.degree,
-			fieldofstudy: this.state.fieldofstudy,
+		const expData = {
+			company: this.state.company,
+			title: this.state.title,
+			location: this.state.location,
 			from: this.state.from,
 			to: this.state.to,
 			current: this.state.current,
 			description: this.state.description
 		};
 
-		this.props.onAddEducation(eduData, this.props.history);
+		this.props.onAddExperience(expData, this.props.history);
 	};
 
 	onChangeHandler = event => {
@@ -66,42 +65,43 @@ class AddEducation extends Component {
 		const { errors } = this.state;
 
 		return (
-			<div className="add-education">
+			<div className="add-experience">
 				<div className="container">
 					<div className="row">
 						<div className="col-md-8 m-auto">
 							<Link className="btn btn-light" to="/dashboard">
 								Go Back
 							</Link>
-							<h1 className="display-4 text-center">Add Education</h1>
-							<p className="lead text-center">
-								Add any school, bootcamp, or certification program that you have attended or currently engaged in.
-							</p>
+							<h1 className="display-4 text-center">Add Experience</h1>
+							<p className="lead text-center">Add any job or position that you have had in the past or current.</p>
 							<small className="d-block pb-3">* = required fields</small>
 							<form onSubmit={this.onSubmitHandler} noValidate>
 								<TextInputGroup
-									name="school"
+									name="company"
 									type="text"
-									placeholder="* School"
-									value={this.state.school}
+									placeholder="* Company"
+									value={this.state.company}
 									onChange={this.onChangeHandler}
-									error={errors.school}
+									error={errors.company}
+									// info="Could be your own company or one you work for"
 								/>
 								<TextInputGroup
-									name="degree"
+									name="title"
 									type="text"
-									placeholder="* Degree or Certification"
-									value={this.state.degree}
+									placeholder="* Job Title"
+									value={this.state.title}
 									onChange={this.onChangeHandler}
-									error={errors.degree}
+									error={errors.title}
+									// info="Could be your own company or one you work for"
 								/>
 								<TextInputGroup
-									name="fieldofstudy"
+									name="location"
 									type="text"
-									placeholder="* Field of Study"
-									value={this.state.fieldofstudy}
+									placeholder="* Location"
+									value={this.state.location}
 									onChange={this.onChangeHandler}
-									error={errors.fieldofstudy}
+									error={errors.location}
+									// info="Could be your own company or one you work for"
 								/>
 								<h6>From Date</h6>
 								<TextInputGroup
@@ -131,7 +131,7 @@ class AddEducation extends Component {
 										onChange={this.onToggleCurrent}
 									/>
 									<label htmlFor="current" className="form-check-label">
-										Currently Attending
+										Current Position
 									</label>
 								</div>
 								<TextAreaGroup
@@ -141,7 +141,7 @@ class AddEducation extends Component {
 									value={this.state.description}
 									onChange={this.onChangeHandler}
 									error={errors.description}
-									info="Tell us about the program you were in"
+									info="Tell us about this position"
 								/>
 								<input type="submit" value="Submit" className="btn btn-info btn-block mt-4" />
 							</form>
@@ -153,8 +153,8 @@ class AddEducation extends Component {
 	}
 }
 
-AddEducation.propTypes = {
-	onAddEducation: PropTypes.func.isRequired,
+AddExperience.propTypes = {
+	onAddExperience: PropTypes.func.isRequired,
 	profile: PropTypes.object.isRequired,
 	errors: PropTypes.object.isRequired
 };
@@ -168,10 +168,10 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
 	return {
-		onAddEducation: (eduData, history) => dispatch(actions.addEducation(eduData, history))
+		onAddExperience: (expData, history) => dispatch(actions.addExperience(expData, history))
 	};
 };
 export default connect(
 	mapStateToProps,
 	mapDispatchToProps
-)(withRouter(AddEducation));
+)(withRouter(AddExperience));

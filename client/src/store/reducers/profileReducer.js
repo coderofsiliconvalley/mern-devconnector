@@ -25,6 +25,12 @@ const reducer = (state = initialState, action) => {
 				...state,
 				profile: null
 			};
+		case actionTypes.PROFILE_GET_ALL:
+			return {
+				...state,
+				profiles: action.payload,
+				loading: false
+			};
 		default:
 			return state;
 	}
