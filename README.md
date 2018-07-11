@@ -17,4 +17,8 @@ TODO: Heroku deployment and remote build instructions to go here
 
 TODO: ENV configuration for production deployment vs. dev
 
-TODO: client/.env for Heroku production vars (don't forget .gitignore for security)
+TODO: client/.env for Heroku production vars (don't forget .gitignore for security) 
+
+### Github Developer API / Configuration 
+
+https://developer.github.com/v3/repos/#list-user-repositories
