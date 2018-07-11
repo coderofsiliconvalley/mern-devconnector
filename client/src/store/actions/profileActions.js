@@ -40,6 +40,28 @@ export const getCurrentProfile = () => dispatch => {
 		);
 };
 
+// Get current user profile BY HANDLE
+export const getProfileByHandle = handle => dispatch => {
+	// Begin the profile retrieval process - get that spinner rolling
+	dispatch(setProfileLoading());
+
+	// Retrieving profile from server
+	axios
+		.get(`/api/profile/handle/${handle}`)
+		.then(result =>
+			dispatch({
+				type: actionTypes.PROFILE_GET,
+				payload: result.data
+			})
+		)
+		.catch(err =>
+			dispatch({
+				type: actionTypes.PROFILE_GET,
+				payload: null
+			})
+		);
+};
+
 // Create a new profile
 export const createProfile = (profileData, history) => dispatch => {
 	axios
@@ -53,6 +75,7 @@ export const createProfile = (profileData, history) => dispatch => {
 		});
 };
 
+// Delete profile AND user account
 export const deleteAccount = () => dispatch => {
 	if (window.confirm("Are you sure? This can NOT be undone!")) {
 		axios

@@ -8,5 +8,6 @@ export {
 	addEducation,
 	deleteExperience,
 	deleteEducation,
-	getProfiles
+	getProfiles,
+	getProfileByHandle
 } from "./profileActions";

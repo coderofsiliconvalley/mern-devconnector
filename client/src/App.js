@@ -25,6 +25,7 @@ import AddEducation from "./components/Dashboard/Profile/AddEducation";
 
 // Public Profile Components
 import Profiles from "./components/Profiles/Profiles";
+import Profile from "./components/Profile/Profile";
 
 // Boostrap App-Wide Style sheet
 import "./App.css";
@@ -47,6 +48,7 @@ class App extends Component {
 						<Route exact path="/logout" component={Logout} />
 
 						<Route exact path="/profiles" component={Profiles} />
+						<Route exact path="/profile/:handle" component={Profile} />
 
 						{/* Protected Routes */}
 						<Switch>
