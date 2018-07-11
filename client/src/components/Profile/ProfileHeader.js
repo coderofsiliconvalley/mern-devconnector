@@ -1,13 +1,9 @@
-import React, { Component } from "react";
+import React from "react";
 
-class ProfileHeader extends Component {
-	render() {
-		return (
-			<div>
-				<h1>TODO: Profile Header</h1>
-			</div>
-		);
-	}
-}
+const profileHeader = props => {
+	const { profile } = props;
 
-export default ProfileHeader;
+	return <div>Header {profile.handle}</div>;
+};
+
+export default profileHeader;

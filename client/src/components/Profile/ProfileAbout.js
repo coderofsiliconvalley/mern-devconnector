@@ -1,13 +1,9 @@
-import React, { Component } from "react";
+import React from "react";
 
-class ProfileAbout extends Component {
-	render() {
-		return (
-			<div>
-				<h1>TODO: Profile About</h1>
-			</div>
-		);
-	}
-}
+const profileAbout = props => {
+	const { profile } = props;
 
-export default ProfileAbout;
+	return <div>About {profile.handle}</div>;
+};
+
+export default profileAbout;

@@ -1,13 +1,9 @@
-import React, { Component } from "react";
+import React from "react";
 
-class ProfileCredentials extends Component {
-	render() {
-		return (
-			<div>
-				<h1>TODO: Profile Credentials</h1>
-			</div>
-		);
-	}
-}
+const profileCredentials = props => {
+	const { profile } = props;
 
-export default ProfileCredentials;
+	return <div>Credentials {profile.handle}</div>;
+};
+
+export default profileCredentials;

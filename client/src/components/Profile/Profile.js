@@ -21,27 +21,39 @@ class Profile extends Component {
 			this.props.onGetHandle(this.props.match.params.handle);
 		}
 	}
+
 	render() {
-		const { profile } = this.props.profile;
+		const { profile, loading } = this.props.profile;
 
 		let profileContent = null;
 
-		if (profile !== null) {
+		if (profile === null || loading) {
+			profileContent = <Spinner />;
+		} else {
 			profileContent = (
 				<div>
-					<ProfileHeader />
-					<ProfileAbout />
-					<ProfileCredentials />
-					<ProfileGithub />
+					<div className="row">
+						<div className="col-md-6">
+							<Link to="/profiles" className="btn btn-light mb-3 float-left">
+								Back To Profiles
+							</Link>
+						</div>
+						<div className="col-md-6" />
+					</div>
+					<div className="row" />
+
+					<ProfileHeader profile={profile} />
+					<ProfileAbout profile={profile} />
+					<ProfileCredentials profile={profile} />
+					<ProfileGithub profile={profile} />
 				</div>
 			);
-		} else {
-			profileContent = <p>Profile not found.</p>;
 		}
 		return (
-			<div>
-				<h1>Main Profile:</h1>
-				{profileContent === null ? <Spinner /> : profileContent}
+			<div className="profile">
+				<div className="container">
+					<div className="col-md-12">{profileContent === null ? <p>Profile Not Found.</p> : profileContent}</div>
+				</div>
 			</div>
 		);
 	}

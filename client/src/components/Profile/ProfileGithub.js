@@ -1,13 +1,9 @@
-import React, { Component } from "react";
+import React from "react";
 
-class ProfileGithub extends Component {
-	render() {
-		return (
-			<div>
-				<h1>TODO: Profile Github</h1>
-			</div>
-		);
-	}
-}
+const profileGithub = props => {
+	const { profile } = props;
 
-export default ProfileGithub;
+	return <div>Github {profile.handle}</div>;
+};
+
+export default profileGithub;
