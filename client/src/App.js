@@ -5,6 +5,7 @@ import * as actions from "./store/actions";
 
 // Common Components
 import PrivateRoute from "./components/Common/PrivateRoute";
+import PageNotFound from "./components/Common/PageNotFound";
 
 // Layout Components
 import Navbar from "./components/Layout/Navbar";
@@ -66,6 +67,8 @@ class App extends Component {
 						<Switch>
 							<PrivateRoute exact path="/add-education" component={AddEducation} />
 						</Switch>
+
+						<Route exact path="/not-found" component={PageNotFound} />
 					</div>
 					<Footer />
 				</div>

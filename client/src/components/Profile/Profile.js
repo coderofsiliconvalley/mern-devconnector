@@ -22,6 +22,13 @@ class Profile extends Component {
 		}
 	}
 
+	componentWillReceiveProps(nextProps) {
+		// Check a handle was not found and if current state is still loading
+		if (nextProps.profile.profile === null && this.props.profile.loading) {
+			this.props.history.push("/not-found");
+		}
+	}
+
 	render() {
 		const { profile, loading } = this.props.profile;
 
