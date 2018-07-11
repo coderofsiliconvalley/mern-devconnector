@@ -19,7 +19,9 @@ const profileAbout = props => {
 			<div className="col-md-12">
 				<div className="card card-body bg-light mb-3">
 					<h3 className="text-center text-info">{firstName}'s Bio</h3>
-					<p className="lead">{isEmpty(profile.bio) ? null : profile.bio}</p>
+					<p className="lead">
+						{isEmpty(profile.bio) ? <span>{firstName} doesn't have a bio</span> : profile.bio}
+					</p>
 					<hr />
 					<h3 className="text-center text-info">Skill Set</h3>
 					<div className="row">
