@@ -16,3 +16,5 @@ React JS front-end of this app is under the /client folder with it's own package
 TODO: Heroku deployment and remote build instructions to go here
 
 TODO: ENV configuration for production deployment vs. dev
+
+TODO: client/.env for Heroku production vars (don't forget .gitignore for security)

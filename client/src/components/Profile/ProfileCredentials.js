@@ -73,18 +73,18 @@ const profileCredentials = props => {
 
 	return (
 		<div className="row">
-			<div class="col-md-6 mb-3">
-				<h3 class="text-center text-info">Experience</h3>
+			<div className="col-md-6 mb-3">
+				<h3 className="text-center text-info">Experience</h3>
 				{experienceList.length > 0 ? (
-					<ul class="list-group">{experienceList}</ul>
+					<ul className="list-group">{experienceList}</ul>
 				) : (
 					<p className="text-center">No Experience Listed</p>
 				)}
 			</div>
-			<div class="col-md-6">
-				<h3 class="text-center text-info">Education</h3>
+			<div className="col-md-6">
+				<h3 className="text-center text-info">Education</h3>
 				{experienceList.length > 0 ? (
-					<ul class="list-group">{educationList}</ul>
+					<ul className="list-group">{educationList}</ul>
 				) : (
 					<p className="text-center">No Education Listed</p>
 				)}

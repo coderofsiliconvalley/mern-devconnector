@@ -5,3 +5,9 @@ node_modules/
 build/
 yarn.lock
 package-lock.json
+
+# REACT 
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local

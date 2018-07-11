@@ -1,9 +1,20 @@
-import React from "react";
+import React, { Component } from "react";
+import { Link } from "react-router-dom";
 
-const profileGithub = props => {
-	const { profile } = props;
+class ProfileGithub extends Component {
+	state = {
+		clientId: process.env.REACT_APP_GITHUB_CLIENT_ID,
+		clientSecret: process.env.REACT_APP_GITHUB_CLIENT_SECRET,
+		count: 5,
+		sort: "created: asc",
+		repos: []
+	};
 
-	return <div>Github {profile.handle}</div>;
-};
+	render() {
+		const { username } = this.props;
 
-export default profileGithub;
+		return <div>Github {username}</div>;
+	}
+}
+
+export default ProfileGithub;
