@@ -28,6 +28,9 @@ import AddEducation from "./components/Dashboard/Profile/AddEducation";
 import Profiles from "./components/Profiles/Profiles";
 import Profile from "./components/Profile/Profile";
 
+// Post Components
+import Posts from "./components/Posts/Posts";
+
 // Boostrap App-Wide Style sheet
 import "./App.css";
 
@@ -44,12 +47,15 @@ class App extends Component {
 					<Navbar />
 					<Route exact path="/" component={Landing} />
 					<div className="container">
+						{/* Authentication Routes */}
 						<Route exact path="/login" component={Login} />
 						<Route exact path="/register" component={Register} />
 						<Route exact path="/logout" component={Logout} />
 
+						{/* Public App Routes */}
 						<Route exact path="/profiles" component={Profiles} />
 						<Route exact path="/profile/:handle" component={Profile} />
+						<Route exact path="/posts" component={Posts} />
 
 						{/* Protected Routes */}
 						<Switch>

@@ -6,11 +6,18 @@ const initialState = {
 	loading: false
 };
 
-export default (render = (state = initialState, action) => {
+const reducer = (state = initialState, action) => {
 	switch (action.type) {
+		case actionTypes.POST_ADD:
+			return {
+				...state,
+				post: action.payload
+			};
 		default:
 			return {
 				...state
 			};
 	}
-});
+};
+
+export default reducer;
