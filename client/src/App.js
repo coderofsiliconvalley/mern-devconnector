@@ -55,7 +55,6 @@ class App extends Component {
 						{/* Public App Routes */}
 						<Route exact path="/profiles" component={Profiles} />
 						<Route exact path="/profile/:handle" component={Profile} />
-						<Route exact path="/posts" component={Posts} />
 
 						{/* Protected Routes */}
 						<Switch>
@@ -73,7 +72,11 @@ class App extends Component {
 						<Switch>
 							<PrivateRoute exact path="/add-education" component={AddEducation} />
 						</Switch>
+						<Switch>
+							<PrivateRoute exact path="/feed" component={Posts} />
+						</Switch>
 
+						{/* 404 Page */}
 						<Route exact path="/not-found" component={PageNotFound} />
 					</div>
 					<Footer />

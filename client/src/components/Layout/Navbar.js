@@ -15,6 +15,11 @@ class Navbar extends Component {
 					</Link>
 				</li>
 				<li className="nav-item">
+					<Link className="nav-link" to="/feed">
+						Feed
+					</Link>
+				</li>
+				<li className="nav-item">
 					<Link className="nav-link" to="/logout">
 						<img
 							className="rounded-circle"
