@@ -128,7 +128,25 @@ export const addComment = (postId, commentData) => dispatch => {
 		.post(`/api/posts/comment/${postId}`, commentData)
 		.then(res =>
 			dispatch({
-				type: actionTypes.POST_GET,
+				type: actionTypes.POST_GET, // Refresh the post - comments are sub-array
+				payload: res.data
+			})
+		)
+		.catch(err =>
+			dispatch({
+				type: actionTypes.GET_ERRORS,
+				payload: err.response.data
+			})
+		);
+};
+
+// Reply to a post
+export const delComment = (postId, commentId) => dispatch => {
+	axios
+		.delete(`/api/posts/comment/${postId}/${commentId}`)
+		.then(res =>
+			dispatch({
+				type: actionTypes.POST_GET, // Refresh the post - comments are a sub-array
 				payload: res.data
 			})
 		)

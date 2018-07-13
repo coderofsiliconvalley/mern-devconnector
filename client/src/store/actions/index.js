@@ -1,5 +1,7 @@
+// User Authentication Actions
 export { registerUser, loginUser, logoutUser, setCurrentUser, checkAuthentication } from "./authActions";
 
+// Profile Actions
 export {
 	getCurrentProfile,
 	createProfile,
@@ -12,4 +14,14 @@ export {
 	getProfileByHandle
 } from "./profileActions";
 
-export { getPost, addPost, getPostsAll, deletePostById, addLike, delLike, addComment } from "./postActions";
+// Post Actions
+export {
+	getPost,
+	addPost,
+	getPostsAll,
+	deletePostById,
+	addLike,
+	delLike,
+	addComment,
+	delComment
+} from "./postActions";

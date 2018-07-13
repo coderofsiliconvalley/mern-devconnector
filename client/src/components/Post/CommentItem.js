@@ -1,18 +1,21 @@
-import React from "react";
+import React, { Component } from "react";
+import { connect } from "react-redux";
 import PropTypes from "prop-types";
 
-const commentItem = props => {
-	const { comment, postId } = props;
-	return (
-		<div>
-			<p>{comment.text}</p>
-		</div>
-	);
-};
+class CommentItem extends Component {
+	render() {
+		const { comment, postId } = this.props;
+		return (
+			<div>
+				<p>{comment.text}</p>
+			</div>
+		);
+	}
+}
 
-commentItem.propTypes = {
+CommentItem.propTypes = {
 	comment: PropTypes.string.isRequired,
 	postId: PropTypes.string.isRequired
 };
 
-export default commentItem;
+export default connect(null)(CommentItem);
