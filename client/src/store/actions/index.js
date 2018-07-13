@@ -12,4 +12,4 @@ export {
 	getProfileByHandle
 } from "./profileActions";
 
-export { addPost, getPostsAll, deletePostById, addLike, delLike } from "./postActions";
+export { getPost, addPost, getPostsAll, deletePostById, addLike, delLike } from "./postActions";

@@ -30,6 +30,7 @@ import Profile from "./components/Profile/Profile";
 
 // Post Components
 import Posts from "./components/Posts/Posts";
+import SinglePost from "./components/Post/Post";
 
 // Boostrap App-Wide Style sheet
 import "./App.css";
@@ -74,6 +75,9 @@ class App extends Component {
 						</Switch>
 						<Switch>
 							<PrivateRoute exact path="/feed" component={Posts} />
+						</Switch>
+						<Switch>
+							<PrivateRoute exact path="/post/:id" component={SinglePost} />
 						</Switch>
 
 						{/* 404 Page */}

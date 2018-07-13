@@ -8,23 +8,29 @@ const initialState = {
 
 const reducer = (state = initialState, action) => {
 	switch (action.type) {
-		case actionTypes.POST_LOADING:
+		case actionTypes.POST_LOADING: // Start the spinner
 			return {
 				...state,
 				loading: true
 			};
-		case actionTypes.POST_GET_ALL:
+		case actionTypes.POST_GET_ALL: // Get all posts TODO: inifinte scrolling
 			return {
 				...state,
 				posts: action.payload,
 				loading: false
 			};
-		case actionTypes.POST_ADD:
+		case actionTypes.POST_GET: // Get single post
+			return {
+				...state,
+				post: action.payload,
+				loading: false
+			};
+		case actionTypes.POST_ADD: // Add a post
 			return {
 				...state,
 				posts: [action.payload, ...state.posts]
 			};
-		case actionTypes.POST_DELETE:
+		case actionTypes.POST_DELETE: // Delete a post
 			return {
 				...state,
 				posts: state.posts.filter(post => post._id !== action.payload)

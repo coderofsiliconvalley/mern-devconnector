@@ -42,6 +42,29 @@ export const getPostsAll = () => dispatch => {
 		);
 };
 
+// Get All Posts
+export const getPost = postId => dispatch => {
+	// Start the spinner
+	dispatch(setPostLoading());
+
+	axios
+		.get(`/api/posts/${postId}`)
+		// Return a single post payload
+		.then(res =>
+			dispatch({
+				type: actionTypes.POST_GET,
+				payload: res.data
+			})
+		)
+		// Return null otherwise
+		.catch(err =>
+			dispatch({
+				type: actionTypes.POST_GET,
+				payload: null
+			})
+		);
+};
+
 // Delete Post By Id
 export const deletePostById = postId => dispatch => {
 	axios
