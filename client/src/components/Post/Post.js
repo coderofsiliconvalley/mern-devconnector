@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 
 // Redux Actions
@@ -7,6 +8,7 @@ import * as actions from "../../store/actions";
 
 // UI Components
 import Spinner from "../Common/Spinner";
+import PostItem from "../Posts/PostItem";
 
 class Post extends Component {
 	// Get the single post by id
@@ -16,11 +18,31 @@ class Post extends Component {
 
 	// Render the single post component
 	render() {
-		const { post } = this.props.post;
+		const { post, loading } = this.props.post;
+		let postContent;
+
+		if (post === null || Object.keys(post).length === 0 || loading) {
+			postContent = <Spinner />;
+		} else {
+			postContent = (
+				<div>
+					<PostItem post={post} showActions={false} />
+				</div>
+			);
+		}
+
 		return (
-			<div>
-				<p>Todo: Single Post</p>
-				<p>{post.text}</p>
+			<div className="post">
+				<div className="container">
+					<div className="row">
+						<div className="col-md-12">
+							<Link to="/feed" className="btn btn-light mb-3">
+								Back To Feed
+							</Link>
+							{postContent}
+						</div>
+					</div>
+				</div>
 			</div>
 		);
 	}
