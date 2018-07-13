@@ -1,13 +1,20 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import PropTypes from "prop-types";
 
+// Redux Actions
 import * as actions from "../../store/actions";
 
+// UI Components
+import Spinner from "../Common/Spinner";
+
 class Post extends Component {
+	// Get the single post by id
 	componentDidMount() {
 		this.props.onGetSinglePost(this.props.match.params.id);
 	}
 
+	// Render the single post component
 	render() {
 		const { post } = this.props.post;
 		return (
@@ -19,6 +26,14 @@ class Post extends Component {
 	}
 }
 
+// Required props for this component
+Post.propTypes = {
+	auth: PropTypes.object.isRequired,
+	post: PropTypes.object.isRequired,
+	onGetSinglePost: PropTypes.func.isRequired
+};
+
+// Redux Properties
 const mapStateToProps = state => {
 	return {
 		auth: state.auth,
