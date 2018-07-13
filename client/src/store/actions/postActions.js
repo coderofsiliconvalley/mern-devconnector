@@ -42,6 +42,24 @@ export const getPostsAll = () => dispatch => {
 		);
 };
 
+// Delete Post By Id
+export const deletePostById = postId => dispatch => {
+	axios
+		.delete(`/api/posts/${postId}`)
+		.then(res =>
+			dispatch({
+				type: actionTypes.POST_DELETE,
+				payload: postId // Send the post id for removing form local store
+			})
+		)
+		.catch(err =>
+			dispatch({
+				type: actionTypes.GET_ERRORS,
+				payload: err.response.data
+			})
+		);
+};
+
 // Set loading state
 export const setPostLoading = () => {
 	return {

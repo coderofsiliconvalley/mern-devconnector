@@ -3,10 +3,14 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 
+// Redux actions
+import * as actions from "../../store/actions";
+
 class PostItem extends Component {
 	// Delete post button handler
 	onDeleteClick = postId => {
 		// TODO: Call delete post action
+		this.props.onDeletePost(postId);
 	};
 
 	render() {
@@ -37,7 +41,7 @@ class PostItem extends Component {
 							</Link>
 							{/* Only Allow deletion by the original poster */}
 							{post.user === auth.user.id ? (
-								<button type="button" className="btn btn-danger mr-1" onClick={this.onDeleteClick(post._id)}>
+								<button type="button" className="btn btn-danger mr-1" onClick={() => this.onDeleteClick(post._id)}>
 									<i className="fas fa-times" />
 								</button>
 							) : null}
@@ -51,7 +55,8 @@ class PostItem extends Component {
 
 PostItem.propTypes = {
 	post: PropTypes.object.isRequired,
-	auth: PropTypes.object.isRequired
+	auth: PropTypes.object.isRequired,
+	onDeletePost: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => {
@@ -61,7 +66,9 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = dispatch => {
-	return {};
+	return {
+		onDeletePost: postId => dispatch(actions.deletePostById(postId))
+	};
 };
 
 export default connect(

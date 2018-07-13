@@ -24,6 +24,11 @@ const reducer = (state = initialState, action) => {
 				...state,
 				posts: [action.payload, ...state.posts]
 			};
+		case actionTypes.POST_DELETE:
+			return {
+				...state,
+				posts: state.posts.filter(post => post._id !== action.payload)
+			};
 		default:
 			return {
 				...state
