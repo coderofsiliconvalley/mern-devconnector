@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
+import classnames from "classnames";
 import PropTypes from "prop-types";
 
 // Redux actions
@@ -13,14 +14,25 @@ class PostItem extends Component {
 		this.props.onDeletePost(postId);
 	};
 
+	//Call addlike action
 	onAddLikeClick = postId => {
-		//Call addlike action
 		this.props.onAddLike(postId);
 	};
 
+	//Call addlike action
 	onDelLikeClick = postId => {
-		//Call addlike action
 		this.props.onDelLike(postId);
+	};
+
+	// Find is current user in in the likes array - i.e. liked the post
+	findUserLike = likes => {
+		const { auth } = this.props;
+
+		if (likes.filter(like => like.user === auth.user.id).length > 0) {
+			return true;
+		} else {
+			return false;
+		}
 	};
 
 	render() {
@@ -40,7 +52,11 @@ class PostItem extends Component {
 						<div className="col-md-10">
 							<p className="lead">{post.text}</p>
 							<button type="button" className="btn btn-light mr-1" onClick={() => this.onAddLikeClick(post._id)}>
-								<i className="text-info fas fa-thumbs-up" />
+								<i
+									className={classnames("fas fa-thumbs-up", {
+										"text-info": this.findUserLike(post.likes)
+									})}
+								/>
 								<span className="badge badge-light">{post.likes.length}</span>
 							</button>
 							<button type="button" className="btn btn-light mr-1" onClick={() => this.onDelLikeClick(post._id)}>

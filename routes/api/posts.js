@@ -78,13 +78,14 @@ router.post("/like/:id", passport.authenticate("jwt", { session: false }), (req,
 	Profile.findOne({ user: req.user.id }).then(profile => {
 		Post.findById(req.params.id)
 			.then(post => {
-				console.log("checking for previous likes");
 				if (post.likes.filter(like => like.user.toString() === req.user.id).length > 0) {
 					return res.status(400).json({ alreadyliked: "User already liked this post" });
 				}
 
 				// Add user to likes array of post and save to DB
 				post.likes.unshift({ user: req.user.id });
+
+				// Save New likes array
 				post.save().then(newPost => {
 					res.json(newPost);
 				});
@@ -101,13 +102,13 @@ router.post("/unlike/:id", passport.authenticate("jwt", { session: false }), (re
 	Profile.findOne({ user: req.user.id }).then(profile => {
 		Post.findById(req.params.id)
 			.then(post => {
-				console.log("checking for previous likes");
 				if (post.likes.filter(like => like.user.toString() === req.user.id).length === 0) {
-					return res.status(400).json({ notliked: "You have liked this post yet" });
+					return res.status(400).json({ notliked: "You have not liked this post yet" });
 				}
 
 				// Get remove index from an Array of just the user ids
-				removeIndex = post.likes.map(item => item.user.toString).indexOf(req.user.id);
+				removeIndex = post.likes.map(item => item.user.toString()).indexOf(req.user.id);
+
 				// Splice out of the array
 				post.likes.splice(removeIndex, 1);
 
