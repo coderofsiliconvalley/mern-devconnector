@@ -9,8 +9,18 @@ import * as actions from "../../store/actions";
 class PostItem extends Component {
 	// Delete post button handler
 	onDeleteClick = postId => {
-		// TODO: Call delete post action
+		//Call delete post action
 		this.props.onDeletePost(postId);
+	};
+
+	onAddLikeClick = postId => {
+		//Call addlike action
+		this.props.onAddLike(postId);
+	};
+
+	onDelLikeClick = postId => {
+		//Call addlike action
+		this.props.onDelLike(postId);
 	};
 
 	render() {
@@ -29,11 +39,11 @@ class PostItem extends Component {
 						</div>
 						<div className="col-md-10">
 							<p className="lead">{post.text}</p>
-							<button type="button" className="btn btn-light mr-1">
+							<button type="button" className="btn btn-light mr-1" onClick={() => this.onAddLikeClick(post._id)}>
 								<i className="text-info fas fa-thumbs-up" />
 								<span className="badge badge-light">{post.likes.length}</span>
 							</button>
-							<button type="button" className="btn btn-light mr-1">
+							<button type="button" className="btn btn-light mr-1" onClick={() => this.onDelLikeClick(post._id)}>
 								<i className="text-secondary fas fa-thumbs-down" />
 							</button>
 							<Link to={`post/${post._id}`} className="btn btn-info mr-1">
@@ -56,7 +66,9 @@ class PostItem extends Component {
 PostItem.propTypes = {
 	post: PropTypes.object.isRequired,
 	auth: PropTypes.object.isRequired,
-	onDeletePost: PropTypes.func.isRequired
+	onDeletePost: PropTypes.func.isRequired,
+	onAddLike: PropTypes.func.isRequired,
+	onDelLike: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => {
@@ -67,7 +79,9 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
 	return {
-		onDeletePost: postId => dispatch(actions.deletePostById(postId))
+		onDeletePost: postId => dispatch(actions.deletePostById(postId)),
+		onAddLike: postId => dispatch(actions.addLike(postId)),
+		onDelLike: postId => dispatch(actions.delLike(postId))
 	};
 };
 
