@@ -9,6 +9,8 @@ import * as actions from "../../store/actions";
 // UI Components
 import Spinner from "../Common/Spinner";
 import PostItem from "../Posts/PostItem";
+import CommentForm from "./CommentForm";
+import CommentFeed from "./CommentFeed";
 
 class Post extends Component {
 	// Get the single post by id
@@ -27,6 +29,8 @@ class Post extends Component {
 			postContent = (
 				<div>
 					<PostItem post={post} showActions={false} />
+					<CommentForm postId={post._id} />
+					<CommentFeed postId={post._id} comments={post.comments} />
 				</div>
 			);
 		}

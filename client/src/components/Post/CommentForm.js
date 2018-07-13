@@ -1,12 +1,14 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
+
+// Redux Actions
 import * as actions from "../../store/actions";
 
 // UI Components
 import TextAreaGroup from "../Common/TextAreaGroup";
 
-class PostForm extends Component {
+class CommentForm extends Component {
 	state = {
 		text: "",
 		errors: {}
@@ -21,14 +23,15 @@ class PostForm extends Component {
 		event.preventDefault();
 
 		const { user } = this.props.auth;
+		const { postId } = this.props;
 
-		const postData = {
+		const commentData = {
 			text: this.state.text,
 			name: user.name,
 			avatar: user.avatar
 		};
 
-		this.props.onAddPost(postData);
+		this.props.onAddComment(postId, commentData);
 
 		// Clear the form
 		this.setState({ text: "" });
@@ -47,13 +50,13 @@ class PostForm extends Component {
 		return (
 			<div className="post-form mb-3">
 				<div className="card card-info">
-					<div className="card-header bg-info text-white">Say Something...</div>
+					<div className="card-header bg-info text-white">Make a comment...</div>
 					<div className="card-body">
 						<form onSubmit={this.onSubmitHandler} noValidate>
 							<div className="form-group">
 								<TextAreaGroup
 									name="text"
-									placeholder="Create a post"
+									placeholder="Reply to post"
 									value={this.state.text}
 									onChange={this.onChangeHandler}
 									error={errors.text}
@@ -70,7 +73,8 @@ class PostForm extends Component {
 	}
 }
 
-PostForm.propTypes = {
+CommentForm.propTypes = {
+	postId: PropTypes.string.isRequired,
 	auth: PropTypes.object.isRequired,
 	errors: PropTypes.object.isRequired,
 	onAddPost: PropTypes.func.isRequired
@@ -85,11 +89,11 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
 	return {
-		onAddPost: postData => dispatch(actions.addPost(postData))
+		onAddComment: (postId, commentData) => dispatch(actions.addComment(postId, commentData))
 	};
 };
 
 export default connect(
 	mapStateToProps,
 	mapDispatchToProps
-)(PostForm);
+)(CommentForm);
