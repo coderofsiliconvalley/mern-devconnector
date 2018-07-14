@@ -22,3 +22,7 @@ TODO: client/.env for Heroku production vars (don't forget .gitignore for securi
 ### Github Developer API / Configuration 
 
 https://developer.github.com/v3/repos/#list-user-repositories
+
+### DEMO
+
+https://afternoon-beach-26939.herokuapp.com/
