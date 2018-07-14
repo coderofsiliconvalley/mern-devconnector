@@ -45,13 +45,15 @@ mongoose
 app.use("/api/users", users);
 app.use("/api/profile", profile);
 app.use("/api/posts", posts);
-app.get("/api/*", (req, res) => res.status(404).json({ noapi: "Not a valid API endpoint" }));
+//app.get("/api/*", (req, res) => res.status(404).json({ noapi: "Not a valid API endpoint" }));
 
 // Service static assets if in production
 if (process.env.NODE_ENV === "production") {
+	console.log("PRODUCTION ENV");
 	// Set static folder
 	app.use(express.static("client/build"));
 	app.get("*", (req, res) => {
+		console.log(path.resolve(__dirname, "client", "build", "index.html"));
 		res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
 	});
 }
