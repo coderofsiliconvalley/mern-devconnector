@@ -5,6 +5,9 @@ import * as actionTypes from "../actions/actionTypes";
 
 // Add new post
 export const addPost = postData => dispatch => {
+	// Clear any previous form errors
+	dispatch(clearErrors());
+
 	axios
 		.post("/api/posts", postData)
 		.then(res =>
@@ -115,15 +118,11 @@ export const delLike = postId => dispatch => {
 		);
 };
 
-// Set loading state
-export const setPostLoading = () => {
-	return {
-		type: actionTypes.POST_LOADING
-	};
-};
-
 // Reply to a post
 export const addComment = (postId, commentData) => dispatch => {
+	// Clear any previous form errors
+	dispatch(clearErrors());
+
 	axios
 		.post(`/api/posts/comment/${postId}`, commentData)
 		.then(res =>
@@ -156,4 +155,18 @@ export const delComment = (postId, commentId) => dispatch => {
 				payload: err.response.data
 			})
 		);
+};
+
+// Set loading state
+export const setPostLoading = () => {
+	return {
+		type: actionTypes.PROFILE_LOADING
+	};
+};
+
+// Set loading state
+export const clearErrors = () => {
+	return {
+		type: actionTypes.CLEAR_ERRORS
+	};
 };
