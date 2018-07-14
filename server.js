@@ -46,14 +46,25 @@ app.use("/api/users", users);
 app.use("/api/profile", profile);
 app.use("/api/posts", posts);
 app.get("/api/*", (req, res) => res.status(404).json({ noapi: "Not a valid API endpoint" }));
+
+// Service static assets if in production
+if (process.env.NODE_ENV === "production") {
+	// Set static folder
+	app.use(express.static("client/build"));
+	app.get("*", (req, res) => {
+		res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
+	});
+}
+
+/// OLD
 // Serve Static File for all other unknown routes
 
-app.get("*", (req, res) => {
-	res.sendFile(path.join(__dirname + "/public/index.html"));
+// app.get("*", (req, res) => {
+// 	res.sendFile(path.join(__dirname + "/public/index.html"));
 
-	// The old 404: File Not Found notice.
-	//res.status(404).json({ msg: "Page Not Found" });
-});
+// 	// The old 404: File Not Found notice.
+// 	//res.status(404).json({ msg: "Page Not Found" });
+// });
 
 //
 // START APP
